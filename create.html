@@ -1,0 +1,808 @@
+<!-- html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FERAQUAD TECHNOLOGY — Modern Lagos Web Developer Portfolio</title>
+  <meta name="description" content="Full-stack web developer in Lagos. Secure, fast, user-friendly websites, web apps & e-commerce. Hire FERAQUAD for results-driven digital solutions." />
+  <meta name="keywords" content="web developer, Lagos, Nigeria, e-commerce, WordPress, React, Node.js, portfolio" />
+  <meta name="author" content="FERAQUAD TECHNOLOGY 'Modern Web Solution'" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="FERAQUAD TECHNOLOGY 'Modern Web Solution'" />
+  <meta property="og:description" content="Transforming ideas into secure & user-friendly web solutions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop" />
+  <meta property="og:url" content="https://feraquad.example" />
+  <!-- Favicon (replace with your own) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'><rect width='256' height='256' rx='48' fill='%230d6efd'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-size='120' fill='white' font-family='Arial'>F</text></svg>">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#0d6efd; /* light blue */
+      --secondary:#4dabf7; /* sky */
+      --bg:#f6f9ff; /* soft white/blue */
+      --text:#1f2937; /* slate */
+      --muted:#6b7280; /* gray */
+      --card:rgba(255,255,255,.72);
+      --blur:12px;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(13,110,253,.12);
+    }
+    /* Dark theme tokens */
+    body.dark{
+      --bg:#0d1b2a;
+      --text:#e5e7eb;
+      --muted:#cbd5e1;
+      --card:rgba(17,25,40,.6);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+    html{scroll-behavior:smooth}
+    body{background:var(--bg); color:var(--text); font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; margin:0;}
+
+    /* ===== Navbar (glassmorphism) ===== */
+    .navbar{
+      margin-bottom: -70px;
+      --bs-navbar-padding-y: .65rem;
+      backdrop-filter: blur(var(--blur));
+      background: linear-gradient( to bottom, rgba(255,255,255,.75), rgba(255,255,255,.55) );
+      border-bottom: 1px solid rgba(13,110,253,.08);
+    }
+
+    /* .navbar.shrink {
+      padding: 0.4rem 1rem !important;
+      background-color: #d4ebfa;
+    } */
+    .nav-animated:hover::after {
+      width: 100%;
+    }
+
+    body.dark .navbar{ background: linear-gradient( to bottom, rgba(17,25,40,.7), rgba(17,25,40,.55) ); border-color: rgba(255,255,255,.06) }
+    .navbar .nav-link{ color:var(--text)!important; opacity:.9; position:relative; transition:.25s }
+    .navbar .nav-link:hover{ opacity:1 }
+    .navbar .nav-link::after{content:""; position:absolute; left:10%; right:10%; bottom:.25rem; height:2px; background:linear-gradient(90deg,var(--primary),var(--secondary)); transform:scaleX(0); transform-origin:left; transition:.25s}
+    .navbar .nav-link:hover::after{ transform:scaleX(1) }
+    .nav-cta{ border-radius:999px; padding:.5rem 1rem; background:linear-gradient(90deg,var(--primary),var(--secondary)); color:#fff!important; box-shadow:var(--shadow) }
+
+    /* ===== Hero ===== */
+    .hero{ position:relative; padding:120px 0 80px; }
+    .hero .gradient-text{ background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip:text; background-clip:text; color:transparent }
+    .hero-blob{
+      position:absolute; inset:-20% -10% auto auto; width:60vmin; height:60vmin; filter: blur(60px); z-index:-1;
+      background: radial-gradient(circle at 30% 30%, rgba(13,110,253,.25), transparent 60%), radial-gradient(circle at 70% 60%, rgba(77,171,247,.25), transparent 55%);
+      pointer-events:none;
+    }
+    .hero-img{ border-radius:var(--radius); box-shadow:var(--shadow); max-width:100%; height:auto; display:block; }
+
+    /* ===== Utility cards (glass) ===== */
+    .glass{ background:var(--card); backdrop-filter: blur(var(--blur)); border:1px solid rgba(13,110,253,.08); border-radius:var(--radius); box-shadow:var(--shadow) }
+    .lift:hover{ transform: translateY(-6px); transition:.25s }
+
+    /* ===== Services ===== */
+    .service-icon{ width:56px;height:56px; display:grid; place-items:center; border-radius:14px; background:linear-gradient(135deg, rgba(13,110,253,.12), rgba(77,171,247,.18));}
+
+    /* ===== Portfolio ===== */
+    .project img{ border-radius:14px; transition: transform .45s ease; width:100%; height:auto; object-fit:cover; }
+    .project:hover img{ transform: scale(1.04) }
+    .tag{ font-size:.75rem; padding:.25rem .5rem; border-radius:999px; background:rgba(13,110,253,.1); color:var(--primary); }
+
+    /* ===== Marquee logos ===== */
+    .logo-track{ display:flex; gap:56px; width:max-content; animation:scroll 28s linear infinite; align-items:center }
+    @keyframes scroll{ from{ transform: translateX(0)} to{ transform: translateX(-50%) } }
+    .logo-track img{ height:44px; filter:grayscale(100%); opacity:.7; transition:.2s }
+    .logo-track img:hover{ filter:none; opacity:1; transform:translateY(-2px) }
+
+    /* ===== Testimonials ===== */
+    .testimonial{ position:relative; }
+    .testimonial .quote{ font-size:2.5rem; line-height:1; opacity:.2; position:absolute; top:-12px; left:12px }
+    .avatar{ width:56px;height:56px;border-radius:50%;object-fit:cover }
+
+    /* ===== About/Skills ===== */
+    .skill .progress{ height:9px; background:rgba(0,0,0,.08) }
+    .skill .progress-bar{ background: linear-gradient(90deg, var(--primary), var(--secondary)) }
+
+    /* ===== FAQ ===== */
+    .accordion-button:not(.collapsed){ color:var(--primary); background: rgba(13,110,253,.08) }
+
+    /* ===== CTA Stripe ===== */
+    .cta{ background: linear-gradient(90deg, var(--primary), var(--secondary)); color:#fff; border-radius:16px }
+
+    /* ===== Footer ===== */
+    footer{ background:linear-gradient(90deg,var(--primary),var(--secondary)); color:#fff }
+
+    /* ===== Back to top ===== */
+    #backToTop{ position:fixed; right:16px; bottom:16px; border-radius:999px; width:48px;height:48px; display:grid; place-items:center; background:var(--card); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,.25); box-shadow:var(--shadow); cursor:pointer; opacity:0; visibility:hidden; transition:.25s; z-index:999; }
+    #backToTop.show{ opacity:1; visibility:visible }
+
+    /* Responsive tweaks */
+    @media (max-width: 991px){
+      .navbar{ margin-bottom: 0; }
+      .hero{ padding:80px 0 50px; }
+      .hero-blob{ display:none; }
+    }
+
+    /* Reduce motion respect */
+    @media (prefers-reduced-motion: reduce){
+      .logo-track{ animation:none }
+      [data-aos]{ opacity:1 !important; transform:none !important; transition:none !important }
+    }
+  </style>
+</head>
+<body>
+<!-- ===== Navbar ===== -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm py-3" role="navigation" aria-label="Main navigation">
+  <div class="container">
+		  <!-- <a href="#" class="logo">
+			  <img src="logo.png" width="150px" height="50px">
+		  </a> -->
+
+    <a class="navbar-brand d-flex align-items-lg-center" href="#home" aria-label="FERAQUAD Home">
+      <span class="fw-bold"><img src="images/brand-logos/ftechlogo-removebg-preview(1).png" width="200px" height="50px" alt=""></span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div id="nav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#process">Process</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link nav-cta ms-lg-2" href="#contact">Hire Me</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="menu-btn">
+			<span></span>
+	</div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header id="home" class="hero">
+  <div class="hero-blob" aria-hidden="true"></div>
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="badge bg-light text-dark glass mb-3">Full-Stack Developer • Lagos-state</span>
+        <h1 class="display-5 fw-bold">Building Modern,<span class="gradient-text"> Fast & Scalable Websites</span> that Drive Business Growth.</h1>
+        <p class="lead mt-3">At FERAQUAD TECHNOLOGY, we create high-performance websites, web apps, and e-commerce platforms designed to convert visitors into loyal customers.</p>
+        <div class="d-flex gap-3 mt-4">
+          <a href="#portfolio" class="btn btn-primary btn-lg">View Work</a>
+          <a href="https://wa.me/2348148058602?text=Hello%20FERAQUAD,%20I%20would%20like%20to%20start%20a%20project" class="btn btn-outline-primary btn-lg"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+        </div>
+        <div class="d-flex gap-3 mt-4 small text-muted">
+          <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PHP/MySQL</span><span class="tag">WordPress</span><span class="tag">Shopify</span>
+        </div>
+      </div>
+
+      
+      <div class="col-lg-6" data-aos="fade-left">
+        <img class="img-fluid hero-img" src="images/brand-logos/feratech.jpeg" alt="Developer at work">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Services ===== -->
+<section id="services" class="py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-4">Our Services</h2>
+    <p class="text-center text-muted mb-5">From strategy to deployment — everything you need to grow online.</p>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up">
+        <div class="glass p-4 h-100 lift">
+          <div class="service-icon"><i class="bi bi-laptop fs-1 text-primary" aria-hidden="true"></i></div>
+          <h4 class="mt-3">Website Development</h4>
+          <ul class="mb-2">
+            <li>Business & Corporate websites</li>
+            <li>Personal & portfolio sites</li>
+            <li>Blog & News platform</li>
+            <li>Nonprofit & community sites</li>
+          </ul>
+          <div class="small text-muted"><h5>SEO, speed & accessibility optimised.</h5></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass p-4 h-100 lift">
+          <div class="service-icon"><i class="bi bi-cart-check text-primary fs-4" aria-hidden="true"></i></div>
+          <h4 class="mt-3">E-Commerce Solutions</h4>
+          <ul class="mb-2">
+            <li>Online Store Setup (WooCommerce, Shopify)</li>
+            <li>Payment Gateway Integration
+              
+            </li>
+            <li>Inventory & Order Management Systems</li>
+          </ul>
+          <div class="small text-muted"><h5>Payments, inventory & order flows.</h5></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
+        <div class="glass p-4 h-100 lift">
+          <div class="service-icon"><i class="bi bi-speedometer2 text-primary fs-4" aria-hidden="true"></i></div>
+          <h4 class="mt-3">Web Applications</h4>
+          <ul class="mb-2">
+            <li>Custom Dashboards & Admin Panels</li>
+            <li>Booking & Reservation System</li>
+            <li>Membership & Subscription Platform</li>
+            <li>Custom Portals</li>
+          </ul>
+          <div class="small text-muted"><h5>APIs, auth, automation.</h5></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="glass p-4 h-100 lift">
+          <div class="service-icon"><i class="bi bi-shield-lock text-primary fs-4" aria-hidden="true"></i></div>
+          <h4 class="mt-3">Care & Hosting</h4>
+          <ul class="mb-2">
+            <li>Maintenance, security</li>
+            <li>Backups & performance monitoring</li>
+            <li>Content edits & design update</li>
+            <li>Full technical support packages</li>
+          </ul>
+          <div class="small text-muted"><h5>Domain & hosting setup, reselling.</h5></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Portfolio ===== -->
+<section id="portfolio" class="py-5 bg-light-subtle">
+  <div class="container">
+    <div class="d-flex align-items-end justify-content-between mb-4">
+      <h2 class="fw-bold mb-0">Recent Projects</h2>
+      <a href="#contact" class="btn btn-outline-primary">Launch Your Site</a>
+    </div>
+    <div class="row g-4">
+      <!-- Project 1 -->
+      <div class="col-md-6 col-lg-3" data-aos="zoom-in">
+        <article class="project h-100">
+          <img loading="lazy" src="images/brand-logos/pyramidcover.png" alt="E-commerce storefront" class="img-fluid">
+          <div class="pt-3">
+            <div class="d-flex gap-2 mb-2"><span class="tag">Educational</span><span class="tag">Portal?Site</span></div>
+            <h5 class="fw-semibold">School Admission Portal</h5>
+            <h6 class="fw-semibold">Pyramid Tutorials,Nigeria</h6>
+            <p class="small text-muted">Fully Responsive design, Contact form with whatsapp integration, course analytic for staff and parents.</p>
+            <p class="small text-muted">Result: Reduced manual work by 60% and improved student onboarding.</p>
+            <div class="d-flex gap-2">
+              <a class="btn btn-primary btn-sm" href="http://pyramidtutorials.com.ng/" aria-label="View demo">View Live Demo</a>
+              <a class="btn btn-outline-primary btn-sm" href="#about" aria-label="Case study">Case Study</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 2 -->
+       <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
+        <article class="project h-100">
+          <img loading="lazy" src="images/brand-logos/ftechcover.png" alt="Corporate business site" class="img-fluid">
+          <div class="pt-3">
+            <div class="d-flex gap-2 mb-2"><span class="tag">WordPress</span><span class="tag">SEO</span></div>
+            <h5 class="fw-semibold">Corporate Business Site</h5>
+            <h6 class="fw-semibold">Feraquad Technology,Nigeria</h6>
+            <p class="small text-muted">Fully responsive design, 7+ section pages, Client testimonials & Portfolio display, Booking/Contact form.</p>
+            <p class="small text-muted">Result: Locks in 40% of company project within 4 months.</p>
+            <p class="small text-muted"></p>
+            <div class="d-flex gap-2">
+              <a class="btn btn-primary btn-sm" href="http://feraquadtechnology.com.ng/">View Live Demo</a>
+              <a class="btn btn-outline-primary btn-sm" href="#services">Case Study</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      
+      <!-- Project 3 -->
+      <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="50">
+        <article class="project h-100">
+          <img loading="lazy" src="images/brand-logos/Screenshot 2025-09-08 at 12-20-03 Feraquad Villa Agency - Real Estate Agency.png" alt="Restaurant website" class="img-fluid">
+          <div class="pt-3">
+            <div class="d-flex gap-2 mb-2"><span class="tag">Bookings</span><span class="tag">Speed 95+</span></div>
+            <h5 class="fw-semibold">Real Estate Site</h5>
+            <h6 class="fw-semibold">Villa Agency,U.S.A</h6>
+            <p class="small text-muted">Real estate showcase with modern UI, property detail pages, 7+ section pages, extra security over database, Schedule a visit/Contact form.</p>
+            <p class="small text-muted">Result: 2x increase in client inquiries within 3 months.</p>
+            <div class="d-flex gap-2">
+              <a class="btn btn-primary btn-sm" href="https://feraquad.github.io/FERAQUAD-VILLA-SITE/">View Live Demo</a>
+              <a class="btn btn-outline-primary btn-sm" href="#services">Case Study</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+
+      <!-- Project 4 -->
+      <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="150">
+        <article class="project h-100">
+          <img loading="lazy" src="images/brand-logos/floraco.png" alt="Shopping website" class="img-fluid">
+          <div class="pt-3">
+            <div class="d-flex gap-2 mb-2"><span class="tag">Shopping</span><span class="tag">payment gateway</span></div>
+            <h5 class="fw-semibold">E-commerce Site</h5>
+            <h6 class="fw-semibold">LadyFloraco, Nigeria</h6>
+            <p class="small text-muted">Custom e-commerce solution showcase with modern UI, product page, product detail pages, cart & checkout section, and secure seamless payments.</p>
+            <p class="small text-muted">Result: E-commerce sales doubled within 4 months.</p>
+            <div class="d-flex gap-2">
+              <a class="btn btn-primary btn-sm" href="https://ladyfloraco.com/">View Live Demo</a>
+              <a class="btn btn-outline-primary btn-sm" href="#services">Case Study</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== Clients (Auto-scroll logos) ===== -->
+<section class="py-5">
+  <div class="container text-center">
+    <div class="mb-3 text-muted">Trusted by Brands and Growing Businesses</div>
+    <div class="overflow-hidden position-relative py-2">
+      <div class="logo-track" aria-hidden="true">
+        <img src="images/3.png" alt="TechStart logo">
+        <img src="images/brand-logos/etimadya.png" alt="BrightMart logo">
+        <img src="images/brand-logos/khostan.png" alt="ShopEase logo">
+        <img src="images/brand-logos/matoontapa.png" alt="NovaCorp logo">
+        <img src="images/brand-logos/nadershakot.png" alt="GreenBank logo">
+        <img src="images/brand-logos/almarah.png" alt="LagosFund logo">
+        <!-- duplicate for infinite loop feel -->
+        <img src="images/3.png" alt="TechStart logo">
+        <img src="images/brand-logos/etimadya.png" alt="BrightMart logo">
+        <img src="images/brand-logos/almarah.png" alt="ShopEase logo">
+        <img src="images/brand-logos/matoontapa.png" alt="NovaCorp logo">
+        <img src="images/brand-logos/nadershakot.png" alt="GreenBank logo">
+        <img src="images/brand-logos/khostan.png" alt="LagosFund logo">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Process ===== -->
+<section id="process" class="py-5 bg-light-subtle">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5">Why Choose FERAQUAD ?</h2>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up">
+        <div class="glass p-4 h-100">
+          <span class="badge bg-primary-subtle text-primary mb-2">01</span>
+          <h6>Client-Centered Approach</h6>
+          <p class="small text-muted mb-0">Your success is our mission, we tailor every solution to meet your business goals, target users & success metrics.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass p-4 h-100">
+          <span class="badge bg-primary-subtle text-primary mb-2">02</span>
+          <h6>Design & Prototype</h6>
+          <p class="small text-muted mb-0">We use the latest frameworks and tools to keep your business ahead of competitors. Iterate quickly with feedback.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
+        <div class="glass p-4 h-100">
+          <span class="badge bg-primary-subtle text-primary mb-2">03</span>
+          <h6>Build & Integrate</h6>
+          <p class="small text-muted mb-0">We build sites with top Front-end + back-end with CI, analytics, SEO & scalability for long-term growth.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="glass p-4 h-100">
+          <span class="badge bg-primary-subtle text-primary mb-2">04</span>
+          <h6>Launch & Grow</h6>
+          <p class="small text-muted mb-0">We give a full free 1 month support, training, hosting & ongoing maintenance, with top level security over site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Pricing (starter tiers) ===== -->
+<section id="pricing" class="py-5">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-4">Pricing</h2>
+    <p class="text-center text-muted mb-5">Official Web Packages</p>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in">
+        <div class="glass p-4 h-100 text-center">
+          <h5>Starter Website</h5>
+          <p class="text-muted">For small businesses & portfolios</p>
+          <div class="display-6 fw-bold my-2">₦40k–₦80k</div>
+          <ul class="list-unstyled small text-muted mb-3">
+            <li>5-10 Pages</li>
+            <li>Responsive Design</li>
+            <li>Basic SEO & Whatsapp CTA</li>
+            <li>1 Month Support</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact">Get Started</a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="glass p-4 h-100 text-center border border-primary">
+          <h5>E-Commerce</h5>
+          <p class="text-muted">For selling products online</p>
+          <div class="display-6 fw-bold my-2">₦100k–₦250k</div>
+          <ul class="list-unstyled small text-muted mb-3">
+            <li>Unlimited Products</li>
+            <li>Checkout & Payment Integration</li>
+            <li>Inventory Dashboard</li>
+            <li>Speed + 2 Months Support</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact">Launch Store</a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="150">
+        <div class="glass p-4 h-100 text-center">
+          <h5>Custom Web App</h5>
+          <p class="text-muted">For complex business needs</p>
+          <div class="display-6 fw-bold my-2">₦250k–₦500k</div>
+          <ul class="list-unstyled small text-muted mb-3">
+            <li>Fully Custom Features</li>
+              <li>API Integration</li>
+              <li>Advanced Security</li>
+              <li>4 Months Support</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Testimonials ===== -->
+<section id="testimonials" class="py-5 bg-light-subtle">
+  <div class="container">
+    <div class="d-flex align-items-end justify-content-between mb-4">
+      <h2 class="fw-bold mb-0">What Our Clients Say</h2>
+      <a href="#contact" class="btn btn-outline-primary">Start Your Project</a>
+    </div>
+
+    <!-- Bootstrap Carousel -->
+    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
+      <div class="carousel-inner">
+        <!-- Testimonial 1 -->
+        <div class="carousel-item active">
+          <div class="glass p-4 testimonial text-center mx-auto" style="max-width:650px;">
+            <div class="quote">“</div>
+            <img class="avatar mb-3" src="images/brand-logos/3.png" alt="Michael Lee">
+            <h5 class="fw-bold">Mr Micheal</h5>
+            <div class="small text-muted mb-2">Founder, Pyramid Tutorials</div>
+            <div class="text-warning mb-3">★★★★★</div>
+            <p>"Feraquad delivered a school admission portal that exceeded our expectations — smooth, scalable, and easy for both staff and parents to use. Their attention to detail was outstanding."</p>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="carousel-item">
+          <div class="glass p-4 testimonial text-center mx-auto" style="max-width:650px;">
+            <div class="quote">“</div>
+            <img class="avatar mb-3" src="images/brand-logos/f.jpeg" alt="Mr Feranmi">
+            <h5 class="fw-bold">Mr Feranmi</h5>
+            <div class="small text-muted mb-2">CEO, Feraquad Technology</div>
+            <div class="text-warning mb-3">★★★★★</div>
+            <p>"The team provided a creative design structure and a strong portfolio showcase. Our landing pages now convert 40% more contracts for the company."</p>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="carousel-item">
+          <div class="glass p-4 testimonial text-center mx-auto" style="max-width:650px;">
+            <div class="quote">“</div>
+            <img class="avatar mb-3" src="https://randomuser.me/api/portraits/women/12.jpg" alt="Fatima Bello">
+            <h5 class="fw-bold">Mrs Opeyemi</h5>
+            <div class="small text-muted mb-2">Marketing Lead, NovaCorp</div>
+            <div class="text-warning mb-3">★★★★☆</div>
+            <p>"Feraquad transformed our online presence. The new site boosted our leads by 40% within just two months. The project was delivered on time, on budget, and came with excellent support."</p>
+          </div>
+        </div>
+
+        <!-- Testimonial 4 -->
+        <div class="carousel-item">
+          <div class="glass p-4 testimonial text-center mx-auto" style="max-width:650px;">
+            <div class="quote">“</div>
+            <img class="avatar mb-3" src="images/brand-logos/img.jpg" alt="Mr Melvin">
+            <h5 class="fw-bold">Mr Melvin</h5>
+            <div class="small text-muted mb-2">CEO, Melvida Affiliate</div>
+            <div class="text-warning mb-3">★★★★★</div>
+            <p>"Our e-commerce sales doubled after Feraquad rebuilt our store with secure payments and modern design. Highly recommended."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel Indicators -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3"></button>
+      </div>
+
+      <!-- Carousel Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== About ===== -->
+ 
+ <section id="about" class="py-5">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <h2 class="fw-bold">About Us</h2>
+        <p>
+          At <strong>FERAQUAD TECHNOLOGY</strong>, we help startups, SMEs, and established brands 
+          scale through high-performance web and mobile solutions. With 4+ years of full-stack 
+          experience, we’ve built projects across <em>education, real estate, retail, and technology</em>.
+        </p>
+        <p>
+          Our mission is simple: deliver <strong>modern design</strong>, 
+          <strong>secure technology</strong>, and <strong>real business impact</strong> 
+          — websites and apps that don’t just look good but drive measurable growth.
+        </p>
+        <ul class="list-unstyled small text-muted">
+          <p>Tech Expertise:</p>
+          <li>• Front-end (React, HTML5, CSS3, JS) — Responsive & interactive interfaces</li>
+          <li>• Back-end (Node.js, PHP, MySQL) — Secure & scalable architectures</li>
+          <li>• CMS & Shops (WordPress, WooCommerce, Shopify) — Fast & flexible e-commerce solutions</li>
+          <li>• Tools (Git, cPanel, SEO, Analytics) — Streamlined workflows & insights</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Let’s Talk</a>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="glass p-4">
+          <div class="skill mb-3">
+            <div class="d-flex justify-content-between"><small>HTML/CSS/JS</small><small>95% – Pixel-perfect design</small></div>
+            <div class="progress"><div class="progress-bar" style="width:95%"></div></div>
+          </div>
+          <div class="skill mb-3">
+            <div class="d-flex justify-content-between"><small>React / MySQL</small><small>88% – Dynamic apps</small></div>
+            <div class="progress"><div class="progress-bar" style="width:88%"></div></div>
+          </div>
+          <div class="skill mb-3">
+            <div class="d-flex justify-content-between"><small>WordPress / Shopify</small><small>92% – E-commerce expertise</small></div>
+            <div class="progress"><div class="progress-bar" style="width:92%"></div></div>
+          </div>
+          <div class="skill">
+            <div class="d-flex justify-content-between"><small>SEO / Performance</small><small>86% – Optimized growth</small></div>
+            <div class="progress"><div class="progress-bar" style="width:86%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===== FAQ ===== -->
+<section id="faq" class="py-5 bg-light-subtle">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-4">FAQ</h2>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="accordion" id="faqAcc">
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#f1" aria-expanded="true" aria-controls="f1">
+                How long does a project take?
+              </button>
+            </h2>
+            <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faqAcc">
+              <div class="accordion-body">Simple sites: 1–3 weeks. E-commerce & apps: 4–10+ weeks depending on features.</div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f2" aria-expanded="false" aria-controls="f2">
+                Do you provide maintenance?
+              </button>
+            </h2>
+            <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body">Yes — monthly care plans include security updates, backups, uptime monitoring and content edits.</div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f3" aria-expanded="false" aria-controls="f3">
+                Can you redesign my existing site?
+              </button>
+            </h2>
+            <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body">Absolutely. I modernize old websites into responsive, modern designs.</div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f4" aria-expanded="false" aria-controls="f4">
+                Do you provide ongoing support?
+              </button>
+            </h2>
+            <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body">Yes. I offer maintenance, updates, and technical support packages.</div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f5" aria-expanded="false" aria-controls="f5">
+                Can you work with my existing brand or CMS?
+              </button>
+            </h2>
+            <div id="f5" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body">Absolutely. I integrate with WordPress, Shopify, custom PHP/Node stacks and align with your brand guidelines.</div>
+            </div>
+          </div>
+
+        </div><!-- /accordion -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA Stripe ===== -->
+<section class="py-5">
+  <div class="container">
+    <div class="cta p-4 p-md-5 d-lg-flex align-items-center justify-content-between">
+      <div>
+        <h3 class="mb-1">Ready to build something great?</h3>
+        <div class="opacity-75">Schedule a free 15-minute consultation today.</div>
+      </div>
+      <div class="mt-3 mt-lg-0 d-flex gap-2">
+        <a class="btn btn-light" href="https://wa.me/2348148058602?text=Hello%20FERAQUAD,%20I%20would%20like%20to%20start%20a%20project"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+        <a class="btn btn-outline-light" href="#contact">Email Me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact ===== -->
+<section id="contact" class="py-5">
+  <div class="container"> 
+    <h2 class="fw-bold text-center mb-4">Contact Us</h2>
+    <p class="text-center text-muted">Let’s discuss your project. I reply within 24 hours.</p>
+    <div class="row g-4 mt-2">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="glass p-4 h-100">
+          <h6 class="mb-3">Reach me directly</h6>
+          <div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-envelope text-primary" aria-hidden="true"></i> <a href="mailto:feraquadtechnology@gmail.com">feraquadtechnology@gmail.com</a></div>
+          <div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-telephone text-primary" aria-hidden="true"></i> <a href="tel:+2348148058602">+234 814 805 8602</a></div>
+          <div class="d-flex align-items-center gap-2"><i class="bi bi-whatsapp text-success" aria-hidden="true"></i> <a href="https://wa.me/2348148058602?text=Hello%20FERAQUAD,%20I%20would%20like%20to%20start%20a%20project">Chat on WhatsApp</a></div>
+          <hr>
+          <div class="small text-muted">Lagos, Nigeria • Available worldwide</div>
+        </div>
+      </div>
+
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="cta p-4 p-md-5 d-lg-flex align-items-center justify-content-between">
+          <div>
+            <h3 class="mb-1">Ready to launch your official site?</h3>
+            <div class="opacity-75">Schedule a free 15-minute consultation today.</div>
+          </div>
+          <div class="mt-3 mt-lg-0 d-flex gap-2">
+            <a class="btn btn-light" href="https://wa.me/2348148058602?text=Hello%20FERAQUAD,%20I%20would%20like%20to%20start%20a%20project"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            <a class="btn btn-outline-light" href="#contact">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ===== Footer ===== -->
+<footer class="py-4">
+<div class="container d-md-flex justify-content-between align-items-center text-center text-md-start">
+    <!-- <div class="small">© <span id="year"></span> FERAQUAD Digital Web Solution. All rights reserved.</div> -->
+
+    <div class="copy-rights">
+		<p>© Created By <b>FERAQUAD TECHNOLOGY</b> All Rights Reserved</p>
+    <div>
+      <a href="https://twitter.com/feraquad" class="text-light me-3"><i class="bi bi-twitter"></i></a>
+      <a href="https://linkedin.com/Feraquad" class="text-light me-3"><i class="bi bi-linkedin"></i></a>
+      <a href="https://github.com/feraquad" class="text-light"><i class="bi bi-github"></i></a>
+    </div>
+
+	</div>
+
+    <div class="small"><a class="text-white" href="#home">Back to top</a></div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+  <a href="https://api.whatsapp.com/send?phone=YOURNUMBERHERE&text=Hello!%20I%20would%20like%20to%20connect%20with%20you." 
+     class="whatsapp-float" target="_blank">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+
+<!-- Back to top floating button -->
+<button id="backToTop" aria-label="Back to top" class="glass"><i class="bi bi-arrow-up"></i></button>
+
+<!-- ===== Scripts ===== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+<!-- JSON-LD Schema (update URLs/contacts as needed) -->
+<!--  -->
+
+<script>
+  // Initialize AOS (subtle animations)
+  AOS.init({ duration: 700, once: true, easing: 'ease-out-quart' });
+
+  // Year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Dark mode toggle with localStorage
+  const themeToggle = document.getElementById('themeToggle');
+  const applyThemeIcon = () => {
+    themeToggle.innerHTML = document.body.classList.contains('dark') ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon"></i>';
+  }
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark'){ document.body.classList.add('dark'); }
+  applyThemeIcon();
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    applyThemeIcon();
+  });
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section, header');
+  const navLinks = document.querySelectorAll('.navbar .nav-link');
+  const opts = { root: null, threshold: 0.45 };
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        navLinks.forEach(a=>a.classList.remove('active'));
+        const id = entry.target.getAttribute('id');
+        if(!id) return;
+        const link = document.querySelector(`.navbar .nav-link[href="#${id}"]`);
+        if(link) link.classList.add('active');
+      }
+    })
+  }, opts);
+  sections.forEach(sec=>{ if(sec.id) obs.observe(sec) });
+
+  // Back to top visibility
+  const btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', ()=>{
+    if(window.scrollY > 600){ btt.classList.add('show') } else { btt.classList.remove('show') }
+  });
+  btt.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+  // Small improvement: close navbar when a link is clicked (mobile)
+  document.querySelectorAll('.navbar .nav-link').forEach(link=>{
+    link.addEventListener('click', () => {
+      const bsCollapse = bootstrap.Collapse.getInstance(document.getElementById('nav'));
+      if(bsCollapse && window.getComputedStyle(document.querySelector('.navbar-toggler')).display !== 'none'){
+        bsCollapse.hide();
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+
